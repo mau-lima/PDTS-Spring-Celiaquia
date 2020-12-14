@@ -4,6 +4,8 @@ import com.mau.spring.model.Alimento;
 
 public class MainPruebaExcel {
     public static void main(String[] args) {
-        Alimento.cargarTabla();
+        //TODO: eliminar
+        System.out.println("Pase por aca");
+
     }
 }

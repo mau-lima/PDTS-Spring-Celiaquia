@@ -30,9 +30,13 @@ public class AlimentoController { //el controller es el frente al exterior, llam
     }
 
     @PostMapping("/")
-    public void addFruta ( @RequestBody Alimento nuevaAlimento){
+    public void addAlimento(@RequestBody Alimento nuevaAlimento){
         alimentoService.addAlimento(nuevaAlimento);
     }
 
+    @PostMapping("/cargarTablas")
+    public void cargarTablas(){ //TODO: Parametrizar de donde vienen los .xls
+        alimentoService.cargarTablas();
+    }
 
 }

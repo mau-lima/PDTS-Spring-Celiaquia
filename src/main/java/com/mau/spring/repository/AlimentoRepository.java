@@ -15,4 +15,6 @@ public interface AlimentoRepository extends JpaRepository<Alimento,Integer> { //
 
 //    @Query(value = "Select * from alimento where weight = ?1", nativeQuery = true)
 //    List<Alimento> findByWeight(int weight);
+
+
 }
