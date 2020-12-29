@@ -29,7 +29,7 @@ public class Alimento {
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int numero;
+    private Integer numero;
     private String nombre;
     private String clasificacion; // carnes, cereales, etc. Son las diferentes tablas
     private String genero_especie_variedad;//algunas tablas de alimento lo tienen
