@@ -1,10 +1,22 @@
 package com.mau.spring.model;
 
-public enum UnidadDeMedida {
-    GRAMO,
-    LITRO,
-    CUCHARADA_SOPERA,
-    CUCHARADA_DE_TE,
-    TAZA,
-    UNIDAD;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Entity
+public class UnidadDeMedida {
+    @Id
+    private int id;
+    private String nombre;
+
 }

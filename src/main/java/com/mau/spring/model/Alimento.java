@@ -28,7 +28,6 @@ import java.util.HashMap;
 public class Alimento {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer numero;
     private String nombre;
     private String clasificacion; // carnes, cereales, etc. Son las diferentes tablas
