@@ -17,5 +17,7 @@ public class Ingrediente {
     @OneToOne
     private Alimento alimento;
     private double cantidad;
+
+    @OneToOne
     private UnidadDeMedida unidadDeMedida;
 }
