@@ -1,7 +1,7 @@
 # PDTS-Spring-Celiaquia
 Documentacion de la API: 
 
-https://petstore.swagger.io/?url=https://raw.githubusercontent.com/maualima/PDTS-Spring-Celiaquia/master/api-6-ene-20.json
+https://petstore.swagger.io/?url=https://raw.githubusercontent.com/maualima/PDTS-Spring-Celiaquia/master/api-docs.json
 
 
 Nota: Para que funcione correctamente el servidor, debe estar funcionando una DB MariaDB en localhost:3306 con:
