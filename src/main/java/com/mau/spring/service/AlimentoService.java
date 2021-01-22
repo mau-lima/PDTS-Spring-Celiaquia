@@ -1,5 +1,6 @@
 package com.mau.spring.service;
 
+import com.mau.spring.model.AccesibleDTO;
 import com.mau.spring.model.Alimento;
 import com.mau.spring.repository.AlimentoRepository;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -17,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Objects.isNull;
 
@@ -38,6 +40,20 @@ public class AlimentoService {
             return alimentoRepository.findAll();
         else
             return alimentoRepository.findByNombre(name);
+    }
+
+    public void setAccesible(AccesibleDTO accesibleDTO) {
+        Optional<Alimento> optionalAlimento = alimentoRepository.findById(accesibleDTO.getNumero());
+        if(optionalAlimento.isPresent()){
+            Alimento alimentoAModificar =optionalAlimento.get();
+
+            alimentoAModificar.setEsAccesible(accesibleDTO.isEsAccesible());
+            alimentoRepository.save(alimentoAModificar);
+        }
+        else{
+            //TODO error
+        }
+
     }
 
     public void cargarTablas() {
@@ -194,4 +210,6 @@ public class AlimentoService {
             e.printStackTrace();
         }
     }
+
+
 }

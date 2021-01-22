@@ -2,6 +2,7 @@ package com.mau.spring.controller;
 
 
 import com.mau.spring.model.Alimento;
+import com.mau.spring.model.AccesibleDTO;
 import com.mau.spring.service.AlimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,11 @@ public class AlimentoController { //el controller es el frente al exterior, llam
     @PostMapping("/cargarTablas")
     public void cargarTablas(){ //TODO: Parametrizar de donde vienen los .xls
         alimentoService.cargarTablas();
+    }
+
+    @PostMapping("/setAccesible")
+    public void setAccesible(@RequestBody AccesibleDTO accesibleDTO){
+        alimentoService.setAccesible(accesibleDTO);
     }
 
 }
