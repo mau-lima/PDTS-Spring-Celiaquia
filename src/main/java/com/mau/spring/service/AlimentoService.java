@@ -2,6 +2,7 @@ package com.mau.spring.service;
 
 import com.mau.spring.model.AccesibleDTO;
 import com.mau.spring.model.Alimento;
+import com.mau.spring.model.AlimentoNotFoundException;
 import com.mau.spring.repository.AlimentoRepository;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -42,7 +43,7 @@ public class AlimentoService {
             return alimentoRepository.findByNombre(name);
     }
 
-    public void setAccesible(AccesibleDTO accesibleDTO) {
+    public void setAccesible(AccesibleDTO accesibleDTO) throws AlimentoNotFoundException {
         Optional<Alimento> optionalAlimento = alimentoRepository.findById(accesibleDTO.getNumero());
         if(optionalAlimento.isPresent()){
             Alimento alimentoAModificar =optionalAlimento.get();
@@ -51,20 +52,17 @@ public class AlimentoService {
             alimentoRepository.save(alimentoAModificar);
         }
         else{
-            //TODO error
+            throw new AlimentoNotFoundException();
         }
 
     }
 
     public void cargarTablas() {
         try {
-            FileInputStream fis = null;
-            fis = new FileInputStream(new File("E:\\Projects\\Proyecto Celiacos\\Excels\\Cereales.xls"));
+            FileInputStream fis =  new FileInputStream(new File("E:\\Projects\\Proyecto Celiacos\\Excels\\Cereales.xls"));
             HSSFWorkbook wb = new HSSFWorkbook(fis);
             HSSFSheet sheet = wb.getSheetAt(0);
             FormulaEvaluator formulaEvaluator = wb.getCreationHelper().createFormulaEvaluator();
-
-
             HashMap<String,Integer> campos = new HashMap<>();
             //sector leer la fila 5 para saber que columnas son las que hay
             HSSFRow fila5 = sheet.getRow(4);
@@ -194,9 +192,6 @@ public class AlimentoService {
                         if(filaActual.getCell(campos.get("Colesterol")).getCellType() == CellType.NUMERIC)
                             nuevoAlimento.setColesterol(filaActual.getCell(campos.get("Colesterol")).getNumericCellValue());
 
-                    System.out.println("juju");
-
-                    System.out.println(nuevoAlimento);
                     this.addAlimento(nuevoAlimento);
 
                 }
@@ -204,12 +199,17 @@ public class AlimentoService {
             }
 
         }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+         catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
+    public Alimento get(Integer alimentoId) throws AlimentoNotFoundException {
+
+        Optional<Alimento> alimento = alimentoRepository.findById(alimentoId);
+        if(alimento.isPresent())
+            return alimento.get();
+        else throw new AlimentoNotFoundException();
+    }
 }
