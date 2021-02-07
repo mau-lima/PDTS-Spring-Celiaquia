@@ -3,9 +3,12 @@ package com.mau.spring.controller;
 
 import com.mau.spring.model.Alimento;
 import com.mau.spring.model.AccesibleDTO;
+import com.mau.spring.model.AlimentoNotFoundException;
 import com.mau.spring.service.AlimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,13 +29,17 @@ public class AlimentoController { //el controller es el frente al exterior, llam
     }
 
     @GetMapping("/{alimentoId}")
-    public Alimento getFrutaById(@PathVariable Integer alimentoId){
-            return new Alimento();
+    public Alimento getAlimentoById(@PathVariable Integer alimentoId){
+        try {
+            return alimentoService.get(alimentoId);
+        } catch (AlimentoNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El alimento solicitado no existe");
+        }
     }
 
     @PostMapping("/")
-    public void addAlimento(@RequestBody Alimento nuevaAlimento){
-        alimentoService.addAlimento(nuevaAlimento);
+    public void addAlimento(@RequestBody Alimento nuevoAlimento){
+        alimentoService.addAlimento(nuevoAlimento);
     }
 
     @PostMapping("/cargarTablas")
@@ -42,7 +49,11 @@ public class AlimentoController { //el controller es el frente al exterior, llam
 
     @PostMapping("/setAccesible")
     public void setAccesible(@RequestBody AccesibleDTO accesibleDTO){
-        alimentoService.setAccesible(accesibleDTO);
+        try {
+            alimentoService.setAccesible(accesibleDTO);
+        } catch (AlimentoNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El alimento a modificar no existe");
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.mau.spring.service;
 
 import com.mau.spring.model.AccesibleDTO;
 import com.mau.spring.model.Alimento;
+import com.mau.spring.model.AlimentoNotFoundException;
 import com.mau.spring.repository.AlimentoRepository;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -12,10 +13,12 @@ import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +45,7 @@ public class AlimentoService {
             return alimentoRepository.findByNombre(name);
     }
 
-    public void setAccesible(AccesibleDTO accesibleDTO) {
+    public void setAccesible(AccesibleDTO accesibleDTO) throws AlimentoNotFoundException {
         Optional<Alimento> optionalAlimento = alimentoRepository.findById(accesibleDTO.getNumero());
         if(optionalAlimento.isPresent()){
             Alimento alimentoAModificar =optionalAlimento.get();
@@ -51,20 +54,38 @@ public class AlimentoService {
             alimentoRepository.save(alimentoAModificar);
         }
         else{
-            //TODO error
+            throw new AlimentoNotFoundException();
         }
 
     }
 
-    public void cargarTablas() {
+    public void cargarTablas(){
+        cargarTabla("Cereales", "http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/Cereales.xls");
+        cargarTabla("Vegetales", "http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/Vegetales.xls");
+        cargarTabla("Frutas","http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/Frutas.xls");
+        cargarTabla("Grasas","http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/Grasas.xls");
+        cargarTabla("Pescados","http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/Pescados.xls");
+        cargarTabla("PescadosAG","http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/PescadosAG.xls");
+        cargarTabla("Carnes","http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/Carnes.xls");
+        cargarTabla("CarnesAG","http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/CarnesAG.xls");
+        cargarTabla("Leche","http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/Leche.xls");
+        cargarTabla("Huevo","http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/Huevo.xls");
+        cargarTabla("ProdAZ","http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/ProdAz.xls");
+        cargarTabla("Misc","http://www.argenfoods.unlu.edu.ar/Tablas/Grupo/Misc.xls");
+
+    }
+
+    private void cargarTabla(String clasificacion, String Url) {
         try {
-            FileInputStream fis = null;
-            fis = new FileInputStream(new File("E:\\Projects\\Proyecto Celiacos\\Excels\\Cereales.xls"));
+            InputStream in = new URL(Url).openStream();
+
+            Path tmpPath = Paths.get(clasificacion+".xls");
+
+            Files.copy(in, tmpPath, StandardCopyOption.REPLACE_EXISTING);
+            FileInputStream fis =  new FileInputStream(tmpPath.toFile());
             HSSFWorkbook wb = new HSSFWorkbook(fis);
             HSSFSheet sheet = wb.getSheetAt(0);
             FormulaEvaluator formulaEvaluator = wb.getCreationHelper().createFormulaEvaluator();
-
-
             HashMap<String,Integer> campos = new HashMap<>();
             //sector leer la fila 5 para saber que columnas son las que hay
             HSSFRow fila5 = sheet.getRow(4);
@@ -80,17 +101,13 @@ public class AlimentoService {
             //busca donde comienzan los alimentos
             int i = 8;
 
-
-
-
             for(;i<sheet.getPhysicalNumberOfRows();i++){ //cargar los N alimentos
                 HSSFRow filaActual = sheet.getRow(i);
-
-
 
                 if(filaActual.getCell(campos.get("Nº")) != null && filaActual.getCell(campos.get("Nº")).getCellType() == CellType.NUMERIC) //si existe la fila
                 {
                     Alimento nuevoAlimento = new Alimento();
+                    nuevoAlimento.setClasificacion(clasificacion);
 
                     if(campos.containsKey("Nº"))
                         if(filaActual.getCell(campos.get("Nº")).getCellType() == CellType.NUMERIC)
@@ -100,7 +117,7 @@ public class AlimentoService {
                         if(filaActual.getCell(campos.get("Alimento")).getCellType() == CellType.STRING)
                             nuevoAlimento.setNombre(filaActual.getCell(campos.get("Alimento")).getStringCellValue());
                         else nuevoAlimento.setNombre(""); //no deberia pasar
-//TODO agregar clasificacion
+
                     if(campos.containsKey("Género - especie - variedad"))
                         if(filaActual.getCell(campos.get("Género - especie - variedad")).getCellType() == CellType.STRING)
                             nuevoAlimento.setGenero_especie_variedad(filaActual.getCell(campos.get("Género - especie - variedad")).getStringCellValue());
@@ -194,22 +211,25 @@ public class AlimentoService {
                         if(filaActual.getCell(campos.get("Colesterol")).getCellType() == CellType.NUMERIC)
                             nuevoAlimento.setColesterol(filaActual.getCell(campos.get("Colesterol")).getNumericCellValue());
 
-                    System.out.println("juju");
-
-                    System.out.println(nuevoAlimento);
                     this.addAlimento(nuevoAlimento);
+                    Files.deleteIfExists(tmpPath);
 
                 }
 
             }
 
         }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+         catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
+    public Alimento get(Integer alimentoId) throws AlimentoNotFoundException {
+
+        Optional<Alimento> alimento = alimentoRepository.findById(alimentoId);
+        if(alimento.isPresent())
+            return alimento.get();
+        else throw new AlimentoNotFoundException();
+    }
 }
