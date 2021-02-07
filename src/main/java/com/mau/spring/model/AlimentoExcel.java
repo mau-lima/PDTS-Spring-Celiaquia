@@ -2,6 +2,7 @@ package com.mau.spring.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -11,7 +12,7 @@ import javax.persistence.InheritanceType;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
 @Entity //entidad de persistencia
 @Inheritance(strategy = InheritanceType.JOINED)
 public class AlimentoExcel {
