@@ -20,5 +20,6 @@ public class Receta {
     @OneToMany(cascade = {CascadeType.ALL})
     private Set<Ingrediente> ingredientes;
 
+    private Integer cantidadPlatos;
     private String instrucciones;
 }
