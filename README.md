@@ -4,10 +4,4 @@ Documentacion de la API:
 https://petstore.swagger.io/?url=https://raw.githubusercontent.com/maualima/PDTS-Spring-Celiaquia/master/api-docs.json
 
 
-Nota: Para que funcione correctamente el servidor, debe estar funcionando una DB MariaDB en localhost:3306 con:
- - una base de datos llamada 'celiaquia'
- - usuario: 'celiaquia'
- - contraseña: 'celiaquia123'
- 
- Esto esta sujeto a cambios pero por el momento esta es la DB que viene con WAMP.
- Los parametros son modificables en el application.yml de spring.
+Nota: Actualmente el proyecto utiliza la base de datos embebida H2 por lo que no es necesario iniciar ningun servidor de DB. La misma es accesible en localhost:8080/h2-console con la JDBC URL: jdbc:h2:mem:test
