@@ -14,10 +14,10 @@ public class Ingrediente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idIngrediente;
-    @OneToOne
+    @ManyToOne
     private Alimento alimento;
     private double cantidad;
 
-    @OneToOne
+    @ManyToOne
     private UnidadDeMedida unidadDeMedida;
 }
