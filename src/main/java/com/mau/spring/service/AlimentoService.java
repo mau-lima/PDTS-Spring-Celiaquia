@@ -2,7 +2,6 @@ package com.mau.spring.service;
 
 import com.mau.spring.model.AccesibleDTO;
 import com.mau.spring.model.Alimento;
-import com.mau.spring.model.AlimentoExcel;
 import com.mau.spring.model.AlimentoNotFoundException;
 import com.mau.spring.repository.AlimentoRepository;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -21,7 +20,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -145,7 +143,8 @@ public class AlimentoService {
                             checkDouble(valores, "ac._grasos_saturados"),
                             checkDouble(valores, "ac._grasos_monoinsaturados"),
                             checkDouble(valores, "ac._grasos_poliinsaturados"),
-                            checkDouble(valores, "colesterol")
+                            checkDouble(valores, "colesterol"),
+                            null
                     );
 
                     this.addAlimento(nuevoAlimento);

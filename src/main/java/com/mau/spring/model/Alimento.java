@@ -1,39 +1,51 @@
 package com.mau.spring.model;
 
-import com.mau.spring.repository.AlimentoRepository;
-import com.mau.spring.service.AlimentoService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashMap;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-@Getter
+@AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Entity //entidad de persistencia
-public class Alimento extends AlimentoExcel {
-    public void setEsAccesible(Boolean esAccesible) {
-        this.esAccesible = esAccesible;
-    }
+public class Alimento {
+    @Id
+    private Integer numero;
+    private String nombre;
+    private String clasificacion; // carnes, cereales, etc. Son las diferentes tablas
+    private String genero_especie_variedad;//algunas tablas de alimento lo tienen
+    private double energia_kJ;
+    private double agua;
+    private double proteina;
+    private double grasa_total;
+    private double carbohidrato_total;
+    private double carbohidrato_disponible;
+    private double fibra_dietetica;
+    private double ceniza;
+    private double sodio;
+    private double potasio;
+    private double calcio;
+    private double fosforo;
+    private double hierro;
+    private double zinc;
+    private double tiamina;
+    private double rivoflavina;
+    private double niacina;
+    private double vitamina_c;
+    private double acidos_grasos_saturados;
+    private double acidos_grasos_monoinsaturados;
+    private double acidos_grasos_poliinsaturados;
+    private double colesterol;
 
     private Boolean esAccesible = null;
 
-
-    public Alimento(Integer numero, String nombre, String clasificacion, String genero_especie_variedad, Double energia_kJ, Double agua, Double proteina, Double grasa_total, Double carbohidrato_total, Double carbohidrato_disponible, Double fibra_dietetica, Double ceniza, Double sodio, Double potasio, Double calcio, Double fosforo, Double hierro, Double zinc, Double tiamina, Double rivoflavina, Double niacina, Double vitamina_c, Double acidos_grasos_saturados, Double acidos_grasos_monoinsaturados, Double acidos_grasos_poliinsaturados, Double colesterol) {
-        super(numero,  nombre,  clasificacion,  genero_especie_variedad,  energia_kJ,  agua,  proteina,  grasa_total,  carbohidrato_total,  carbohidrato_disponible,  fibra_dietetica,  ceniza,  sodio,  potasio,  calcio,  fosforo,  hierro,  zinc,  tiamina,  rivoflavina,  niacina,  vitamina_c,  acidos_grasos_saturados,  acidos_grasos_monoinsaturados,  acidos_grasos_poliinsaturados,  colesterol);
+    public void setEsAccesible(Boolean esAccesible) {
+        this.esAccesible = esAccesible;
     }
 }
