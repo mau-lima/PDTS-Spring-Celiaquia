@@ -29,6 +29,7 @@ public class RecetaService {
 
     public void addReceta(Receta nuevaReceta){
         nuevaReceta.setIdReceta(null);
+
         recetaRepository.save(nuevaReceta);
     }
     public void modificarReceta(Receta nuevaReceta){
@@ -38,4 +39,7 @@ public class RecetaService {
     public void deleteReceta(Integer idReceta) {
         recetaRepository.deleteById(idReceta);
     }
+
+
+
 }

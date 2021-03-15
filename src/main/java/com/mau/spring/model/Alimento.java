@@ -43,6 +43,8 @@ public class Alimento {
     private double acidos_grasos_poliinsaturados;
     private double colesterol;
 
+
+
     private Boolean esAccesible = null;
 
     public void setEsAccesible(Boolean esAccesible) {

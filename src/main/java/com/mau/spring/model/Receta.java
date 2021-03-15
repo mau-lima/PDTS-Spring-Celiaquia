@@ -45,4 +45,8 @@ public class Receta {
     private double acidos_grasos_monoinsaturados;
     private double acidos_grasos_poliinsaturados;
     private double colesterol;
+
+
+    private int cantidad_alimentos_accesibles;
+    private int cantidad_alimentos_no_accesibles;
 }
