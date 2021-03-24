@@ -5,11 +5,15 @@ import com.mau.spring.model.Alimento;
 import com.mau.spring.model.AccesibleDTO;
 import com.mau.spring.model.AlimentoNotFoundException;
 import com.mau.spring.service.AlimentoService;
+import com.mau.spring.utils.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -53,6 +57,26 @@ public class AlimentoController { //el controller es el frente al exterior, llam
             alimentoService.setAccesible(accesibleDTO);
         } catch (AlimentoNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El alimento a modificar no existe");
+        }
+    }
+
+    @PostMapping("/setImagen")
+    public void setImagen(int numero, @RequestParam("image") MultipartFile multipartFile){
+        try {
+            String[] temp = StringUtils.cleanPath(multipartFile.getOriginalFilename()).split("\\.");
+            String extension = temp[temp.length-1];
+
+            String fileName = ""+numero+"."+extension;
+            String uploadDir = "public/img/alimentos/";
+
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+            alimentoService.setImagen(numero, fileName);
+        } catch (AlimentoNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El alimento a modificar no existe");
+        }
+        catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "La imagen para este alimento no pudo ser guardada");
         }
     }
 

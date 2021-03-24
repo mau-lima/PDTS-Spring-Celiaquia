@@ -20,6 +20,7 @@ public class Alimento {
     private String nombre;
     private String clasificacion; // carnes, cereales, etc. Son las diferentes tablas
     private String genero_especie_variedad;//algunas tablas de alimento lo tienen
+
     private double energia_kJ;
     private double agua;
     private double proteina;
@@ -43,11 +44,14 @@ public class Alimento {
     private double acidos_grasos_poliinsaturados;
     private double colesterol;
 
-
-
     private Boolean esAccesible = null;
+    private String imagen;
 
     public void setEsAccesible(Boolean esAccesible) {
         this.esAccesible = esAccesible;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

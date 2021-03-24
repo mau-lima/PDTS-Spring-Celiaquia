@@ -3,6 +3,7 @@ package com.mau.spring.service;
 import com.mau.spring.model.AccesibleDTO;
 import com.mau.spring.model.Alimento;
 import com.mau.spring.model.AlimentoNotFoundException;
+import com.mau.spring.model.ImagenDTO;
 import com.mau.spring.repository.AlimentoRepository;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -52,6 +53,19 @@ public class AlimentoService {
             Alimento alimentoAModificar = optionalAlimento.get();
 
             alimentoAModificar.setEsAccesible(accesibleDTO.isEsAccesible());
+            alimentoRepository.save(alimentoAModificar);
+        } else {
+            throw new AlimentoNotFoundException();
+        }
+
+    }
+
+    public void setImagen(int numeroAlimento, String filenameImagen) throws AlimentoNotFoundException {
+        Optional<Alimento> optionalAlimento = alimentoRepository.findById(numeroAlimento);
+        if (optionalAlimento.isPresent()) {
+            Alimento alimentoAModificar = optionalAlimento.get();
+
+            alimentoAModificar.setImagen(filenameImagen);
             alimentoRepository.save(alimentoAModificar);
         } else {
             throw new AlimentoNotFoundException();
@@ -144,6 +158,7 @@ public class AlimentoService {
                             checkDouble(valores, "ac._grasos_monoinsaturados"),
                             checkDouble(valores, "ac._grasos_poliinsaturados"),
                             checkDouble(valores, "colesterol"),
+                            null,
                             null
                     );
 
