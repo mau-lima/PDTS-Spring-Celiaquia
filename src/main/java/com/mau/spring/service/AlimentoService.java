@@ -3,7 +3,6 @@ package com.mau.spring.service;
 import com.mau.spring.model.AccesibleDTO;
 import com.mau.spring.model.Alimento;
 import com.mau.spring.model.AlimentoNotFoundException;
-import com.mau.spring.model.ImagenDTO;
 import com.mau.spring.repository.AlimentoRepository;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
