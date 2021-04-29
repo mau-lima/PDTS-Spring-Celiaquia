@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Entity
 @Data
-public class Usuario {
+public class UsuarioApp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
