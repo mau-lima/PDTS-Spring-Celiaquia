@@ -65,22 +65,22 @@ public class UsuarioWeb implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return fecha_baja != null;
+        return fecha_baja == null;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return fecha_baja != null;
+        return fecha_baja == null;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return fecha_baja != null;
+        return fecha_baja == null;
     }
 
     @Override
     public boolean isEnabled() {
-        return fecha_baja != null;
+        return fecha_baja == null;
     }
 }
 

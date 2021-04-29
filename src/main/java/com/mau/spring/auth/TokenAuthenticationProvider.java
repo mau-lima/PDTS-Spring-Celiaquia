@@ -30,10 +30,13 @@ final class TokenAuthenticationProvider extends AbstractUserDetailsAuthenticatio
     @Override
     protected UserDetails retrieveUser(final String email, final UsernamePasswordAuthenticationToken authentication) {
         final Object token = authentication.getCredentials();
-        return Optional
+
+        UserDetails resultado =Optional
                 .ofNullable(token)
                 .map(String::valueOf)
                 .flatMap(auth::findByToken)
                 .orElseThrow(() -> new UsernameNotFoundException("Cannot find user with authentication token=" + token));
+
+        return resultado;
     }
 }

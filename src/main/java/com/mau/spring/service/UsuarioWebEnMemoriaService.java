@@ -17,21 +17,24 @@ public class UsuarioWebEnMemoriaService implements UsuarioWebService {
 
     @Override
     public UsuarioWeb guardar(UsuarioWeb user) {
-        return users.put(user.getId(), user);
+        UsuarioWeb resultado = users.put(user.getId(), user);
+        return resultado;
     }
 
     @Override
     public Optional<UsuarioWeb> buscar(final String id) {
-        return ofNullable(users.get(id));
+        Optional<UsuarioWeb> resultado = ofNullable(users.get(id));
+        return resultado;
     }
 
     @Override
     public Optional<UsuarioWeb> buscarPorEmail(String email) {
-        return users
+        Optional<UsuarioWeb> resultado = users
                 .values()
                 .stream()
                 .filter(u -> Objects.equals(email, u.getEmail()))
                 .findFirst();
+        return resultado;
     }
 }
 
