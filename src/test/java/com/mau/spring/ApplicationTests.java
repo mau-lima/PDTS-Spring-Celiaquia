@@ -12,14 +12,14 @@ import  org.hamcrest.Matchers.*;
 @SpringBootTest
 class ApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+//	@Test
+//	void contextLoads() {
+//	}
 
-	@Test
-	public void prueba1() {
-		//este ejemplo no prueba nada por ahora.
-		RestAssured.get("/events?id=390").then().statusCode(200).assertThat()
-				.body("data.leagueId", Matchers.equalTo(35));
-	}
+//	@Test
+//	public void prueba1() {
+//		//este ejemplo no prueba nada por ahora.
+////		RestAssured.get("/events?id=390").then().statusCode(200).assertThat()
+////				.body("data.leagueId", Matchers.equalTo(35));
+//	}
 }
